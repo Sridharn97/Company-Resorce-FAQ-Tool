@@ -85,7 +85,7 @@ export default function Profile() {
                 ))}
               </div>
             ) : (
-              <p>You haven't submitted any questions yet. <Link href="/ask">Submit your first question</Link></p>
+              <p>You haven&apos;t submitted any questions yet. <Link href="/ask">Submit your first question</Link></p>
             )}
           </div>
 
@@ -111,7 +111,7 @@ export default function Profile() {
                 ))}
               </div>
             ) : (
-              <p>You haven't marked any FAQs as helpful yet.</p>
+              <p>You haven&apos;t marked any FAQs as helpful yet.</p>
             )}
           </div>
         </main>

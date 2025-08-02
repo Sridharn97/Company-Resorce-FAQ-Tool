@@ -97,7 +97,7 @@ export default function AskQuestion() {
           fontSize: '1.1rem',
           lineHeight: '1.6'
         }}>
-          Can't find what you're looking for? Ask us a question and we'll get back to you!
+          Can&apos;t find what you&apos;re looking for? Ask us a question and we&apos;ll get back to you!
         </p>
       </div>
       
