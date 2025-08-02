@@ -37,10 +37,13 @@ export default function AskQuestion() {
     setError('');
     setSuccess('');
     try {
+      // Generate a unique userId for this submission
+      const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
       const res = await fetch('/api/user-questions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, question }),
+        body: JSON.stringify({ name, email, question, userId }),
       });
       const data = await res.json();
       if (res.ok) {

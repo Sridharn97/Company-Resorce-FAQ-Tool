@@ -236,6 +236,13 @@ export default function Home() {
             </div>
           </div>
 
+          {user && (
+            <div className={styles.userNotification}>
+              <h3>Welcome back, {user.email}!</h3>
+              <p>You can ask questions and track their status. Check the "Ask a Question" section below.</p>
+            </div>
+          )}
+
           {loading ? (
             <div className={styles.loading}>Loading FAQs...</div>
           ) : (
