@@ -621,6 +621,16 @@
     font-size: 1rem;
     min-height: 44px;
   }
+  
+  .pagination {
+    gap: 0.3rem;
+  }
+  
+  .pageButton {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    min-width: 36px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -682,12 +692,76 @@
   }
 }
 
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.pageButton {
+  background: linear-gradient(135deg, #36d1c4 0%, #5b86e5 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(54,209,196,0.3);
+}
+
+.pageButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.activePage {
+  background: linear-gradient(135deg, #5b86e5 0%, #36d1c4 100%);
+  box-shadow: 0 2px 8px rgba(91,134,229,0.3);
+}
+
+.pageEllipsis {
+  color: #5b86e5;
+  font-weight: 600;
+  padding: 0.6rem 0.5rem;
+}
+
+.resultsInfo {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, #f8fafc 60%, #e3e9f7 100%);
+  border-radius: 8px;
+  border-left: 4px solid #36d1c4;
+}
+
+.resultsInfo p {
+  margin: 0;
+  color: #5b86e5;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .createButton,
   .faqActions a,
   .deleteButton,
-  .button {
+  .button,
+  .pageButton {
     border: 2px solid #000;
   }
 }
