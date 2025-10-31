@@ -19,11 +19,6 @@ export default function Home() {
   const [totalFaqs, setTotalFaqs] = useState(0);
   const [faqsPerPage] = useState(6);
 
-  useEffect(() => {
-    fetchUser();
-    fetchFaqs();
-  }, [search, selectedCategory, selectedTag, sortBy, currentPage]);
-
   const fetchUser = async () => {
     try {
       const res = await fetch('/api/auth/me');
@@ -73,6 +68,11 @@ export default function Home() {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchUser();
+    fetchFaqs();
+  }, [search, selectedCategory, selectedTag, sortBy, currentPage]);
 
   const handleLogout = async () => {
     try {
@@ -239,7 +239,7 @@ export default function Home() {
           {user && (
             <div className={styles.userNotification}>
               <h3>Welcome back, {user.email}!</h3>
-              <p>You can ask questions and track their status. Check the "Ask a Question" section below.</p>
+              <p>You can ask questions and track their status. Check the &quot;Ask a Question&quot; section below.</p>
             </div>
           )}
 
