@@ -13,7 +13,7 @@ export default function Home() {
   const [selectedTag, setSelectedTag] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
   const [user, setUser] = useState(null);
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalFaqs, setTotalFaqs] = useState(0);
@@ -113,7 +113,7 @@ export default function Home() {
         >
           Previous
         </button>
-        
+
         {startPage > 1 && (
           <>
             <button
@@ -200,7 +200,7 @@ export default function Home() {
               onChange={(e) => setSearch(e.target.value)}
               className={styles.searchInput}
             />
-            
+
             <div className={styles.filters}>
               <select
                 value={selectedCategory}
@@ -247,10 +247,6 @@ export default function Home() {
             <div className={styles.loading}>Loading FAQs...</div>
           ) : (
             <>
-              <div className={styles.resultsInfo}>
-                <p>Showing {faqs.length} of {totalFaqs} FAQs</p>
-              </div>
-              
               <div className={styles.faqList}>
                 {Array.isArray(faqs) && faqs.length === 0 ? (
                   <p>No FAQs found matching your search criteria.</p>
