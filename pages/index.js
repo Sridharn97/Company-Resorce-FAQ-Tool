@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
+import FAQCard from '../components/FAQCard';
+import UserMenu from '../components/UserMenu';
+import FilterDropdown from '../components/FilterDropdown';
+
+
 
 export default function Home() {
   const [faqs, setFaqs] = useState([]);
@@ -171,70 +176,58 @@ export default function Home() {
           <h1>Company Resource FAQ</h1>
           <nav className={styles.nav}>
             {(!user || user.role !== 'admin') && (
-              <Link href="/ask" className={styles.askButton}>Ask a Question</Link>
+              <Link href="/ask" className={styles.signupButton}>Ask a Question</Link>
             )}
-            {user ? (
-              <>
-                <span>Welcome, {user.email}</span>
-                {/* <Link href="/profile"></Link> */}
-                {user.role === 'admin' && (
-                  <Link href="/admin/dashboard">Admin Dashboard</Link>
-                )}
-                <button onClick={handleLogout}>Logout</button>
-              </>
-            ) : (
-              <>
-                <Link href="/login">Login</Link>
-                <Link href="/signup">Sign Up</Link>
-              </>
-            )}
+            <UserMenu user={user} onLogout={handleLogout} />
+
           </nav>
         </header>
 
         <main className={styles.main}>
           <div className={styles.searchSection}>
-            <input
-              type="text"
-              placeholder="Search FAQs..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className={styles.searchInput}
-            />
+            <div className={styles.searchWrapper}>
+              <input
+                type="text"
+                placeholder="Search FAQs, categories, or keywords..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
 
-            <div className={styles.filters}>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className={styles.filterSelect}
-              >
-                <option value="all">All Categories</option>
-                {(categories || []).map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
 
-              <select
-                value={selectedTag}
-                onChange={(e) => setSelectedTag(e.target.value)}
-                className={styles.filterSelect}
-              >
-                <option value="all">All Tags</option>
-                {(tags || []).map(tag => (
-                  <option key={tag} value={tag}>{tag}</option>
-                ))}
-              </select>
+            <div className={styles.filtersContainer}>
+              <div className={styles.filters}>
+                <FilterDropdown
+                  label="All Categories"
+                  options={[{ label: 'All Categories', value: 'all' }, ...(categories || []).map(cat => ({ label: cat, value: cat }))] }
+                  value={selectedCategory}
+                  onChange={setSelectedCategory}
+                />
 
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className={styles.filterSelect}
-              >
-                <option value="newest">Newest</option>
-                <option value="helpful">Most Helpful</option>
-                <option value="views">Most Viewed</option>
-              </select>
+                <FilterDropdown
+                  label="All Tags"
+                  options={[{ label: 'All Tags', value: 'all' }, ...(tags || []).map(tag => ({ label: tag, value: tag }))] }
+                  value={selectedTag}
+                  onChange={setSelectedTag}
+                />
+
+                <FilterDropdown
+                  label="Sort By"
+                  options={[
+                    { label: 'Newest First', value: 'newest' },
+                    { label: 'Most Helpful', value: 'helpful' },
+                    { label: 'Most Viewed', value: 'views' }
+                  ]}
+                  value={sortBy}
+                  onChange={setSortBy}
+                />
+              </div>
             </div>
           </div>
+
+
+
 
           {user && (
             <div className={styles.userNotification}>
@@ -252,23 +245,7 @@ export default function Home() {
                   <p>No FAQs found matching your search criteria.</p>
                 ) : (
                   (faqs || []).map(faq => (
-                    <Link key={faq._id} href={`/faq/${faq._id}`} className={styles.faqCardLink}>
-                      <div className={styles.faqCard} tabIndex={0} role="button" aria-label={`View FAQ: ${faq.question}`}>
-                        <h3 className={styles.faqCardTitle}>{faq.question}</h3>
-                        <div className={styles.faqMeta}>
-                          <span className={styles.category}>{faq.category}</span>
-                          <span className={styles.views}>{faq.views} views</span>
-                          <div className={styles.tags}>
-                            {(faq.tags || []).map(tag => (
-                              <span key={tag} className={styles.tag}>{tag}</span>
-                            ))}
-                          </div>
-                        </div>
-                        <div className={styles.faqCardFooter}>
-                          <span className={styles.faqCardButton}>View FAQ →</span>
-                        </div>
-                      </div>
-                    </Link>
+                    <FAQCard key={faq._id} faq={faq} />
                   ))
                 )}
               </div>

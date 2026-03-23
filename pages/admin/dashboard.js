@@ -8,7 +8,9 @@ export default function AdminDashboard() {
   const [user, setUser] = useState(null);
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [analytics, setAnalytics] = useState(null);
   const router = useRouter();
+
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,9 +22,23 @@ export default function AdminDashboard() {
     const initializeData = async () => {
       await checkAuth();
       await fetchFaqs();
+      await fetchAnalytics();
     };
     initializeData();
   }, [currentPage]);
+
+  const fetchAnalytics = async () => {
+    try {
+      const res = await fetch('/api/admin/analytics');
+      if (res.ok) {
+        const data = await res.json();
+        setAnalytics(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch analytics:', error);
+    }
+  };
+
 
   const checkAuth = async () => {
     try {
@@ -186,18 +202,88 @@ export default function AdminDashboard() {
         <main className={styles.main}>
           <div className={styles.stats}>
             <div className={styles.statCard}>
-              <h3>Total FAQs</h3>
-              <p>{totalFaqs}</p>
+              <div className={styles.statContent}>
+                <p className={styles.statLabel}>Total FAQs</p>
+                <h3 className={styles.statValue}>{analytics?.stats?.totalFaqs || 0}</h3>
+              </div>
             </div>
             <div className={styles.statCard}>
-              <h3>Total Views</h3>
-              <p>{faqs.reduce((sum, faq) => sum + faq.views, 0)}</p>
+              <div className={styles.statContent}>
+                <p className={styles.statLabel}>Total Views</p>
+                <h3 className={styles.statValue}>{analytics?.stats?.totalViews || 0}</h3>
+              </div>
             </div>
             <div className={styles.statCard}>
-              <h3>Helpful Votes</h3>
-              <p>{faqs.reduce((sum, faq) => sum + faq.helpfulYes, 0)}</p>
+              <div className={styles.statContent}>
+                <p className={styles.statLabel}>Pending Questions</p>
+                <h3 className={styles.statValue}>{analytics?.stats?.pendingQuestions || 0}</h3>
+              </div>
+            </div>
+            <div className={styles.statCard}>
+              <div className={styles.statContent}>
+                <p className={styles.statLabel}>Helpful Votes</p>
+                <h3 className={styles.statValue}>{analytics?.stats?.totalHelpful || 0}</h3>
+              </div>
             </div>
           </div>
+
+
+          <section className={styles.insightsSection}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>
+                <span className={styles.gradientText}>Impact Analytics & Knowledge Gaps</span>
+              </h2>
+              <p className={styles.sectionSubtitle}>Data-driven insights to improve your resource coverage</p>
+            </div>
+
+            <div className={styles.insightsGrid}>
+              <div className={styles.knowledgeGapsCard}>
+                <div className={styles.cardHeader}>
+                  <h4>🔥 High-Priority Gaps</h4>
+                  <p>Categories with high demand but few FAQs</p>
+                </div>
+                <div className={styles.gapsList}>
+                  {analytics?.knowledgeGaps?.length > 0 ? (
+                    analytics.knowledgeGaps.map((gap, i) => (
+                      <div key={i} className={`${styles.gapItem} ${styles[gap.priority.toLowerCase()]}`}>
+                        <div className={styles.gapInfo}>
+                          <p className={styles.gapCategory}>{gap.category}</p>
+                          <p className={styles.gapReason}>{gap.reason}</p>
+                        </div>
+                        <div className={styles.gapBadge}>
+                          {gap.pendingQuestions ? `${gap.pendingQuestions} Pending Qs` : `${gap.currentFaqs} FAQ(s)`}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className={styles.emptyGaps}>✓ All categories are well-covered!</div>
+                  )}
+                </div>
+              </div>
+
+              <div className={styles.categoryPerformanceCard}>
+                <div className={styles.cardHeader}>
+                  <h4>📊 Top Category Efficiency</h4>
+                  <p>Average views per FAQ</p>
+                </div>
+                <div className={styles.performanceList}>
+                  {(analytics?.categoryData || []).slice(0, 5).map((d, i) => (
+                    <div key={i} className={styles.performanceItem}>
+                      <span className={styles.perfLabel}>{d.category}</span>
+                      <div className={styles.perfBarWrapper}>
+                        <div 
+                          className={styles.perfBar} 
+                          style={{ width: `${Math.min(100, (d.efficiencyScore / Math.max(...analytics.categoryData.map(cd => cd.efficiencyScore))) * 100)}%` }}
+                        ></div>
+                      </div>
+                      <span className={styles.perfValue}>{d.efficiencyScore} v/f</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
 
           <div className={styles.faqList}>
             <h2>Manage FAQs</h2>
