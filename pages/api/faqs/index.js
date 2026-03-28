@@ -23,12 +23,14 @@ export default async function handler(req, res) {
       
       // Filter by category
       if (category && category !== 'all') {
-        query.category = category;
+        const escapedCategory = category.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        query.category = { $regex: new RegExp(`\\b${escapedCategory}\\b`, 'i') };
       }
       
       // Filter by tags
       if (tags && tags !== 'all') {
-        query.tags = { $in: [tags] };
+        const escapedTags = tags.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        query.tags = { $regex: new RegExp(`^${escapedTags}$`, 'i') };
       }
 
 
@@ -57,8 +59,32 @@ export default async function handler(req, res) {
         .limit(limitNum);
 
       const allFaqs = await FAQ.find({});
-      const categories = [...new Set(allFaqs.map(faq => faq.category))];
-      const allTags = [...new Set(allFaqs.flatMap(faq => faq.tags))];
+      
+      const uniqueCategories = new Map();
+      allFaqs.forEach(faq => {
+        if (faq.category) {
+          faq.category.split(',').forEach(c => {
+            const trimmed = c.trim();
+            if (trimmed && !uniqueCategories.has(trimmed.toLowerCase())) {
+              uniqueCategories.set(trimmed.toLowerCase(), trimmed);
+            }
+          });
+        }
+      });
+      const categories = Array.from(uniqueCategories.values());
+
+      const uniqueTags = new Map();
+      allFaqs.forEach(faq => {
+        if (faq.tags) {
+          faq.tags.forEach(t => {
+            const trimmed = t.trim();
+            if (trimmed && !uniqueTags.has(trimmed.toLowerCase())) {
+              uniqueTags.set(trimmed.toLowerCase(), trimmed);
+            }
+          });
+        }
+      });
+      const allTags = Array.from(uniqueTags.values());
 
       res.status(200).json({
         faqs,
