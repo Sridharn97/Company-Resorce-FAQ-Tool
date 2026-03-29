@@ -229,12 +229,7 @@ export default function Home() {
 
 
 
-          {user && (
-            <div className={styles.userNotification}>
-              <h3>Welcome back, {user.email}!</h3>
-              <p>You can ask questions and track their status. Check the &quot;Ask a Question&quot; section below.</p>
-            </div>
-          )}
+
 
           {loading ? (
             <div className={styles.loading}>Loading FAQs...</div>
