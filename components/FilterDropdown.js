@@ -25,6 +25,19 @@ export default function FilterDropdown({ label, options, value, onChange, icon }
         aria-expanded={isOpen}
       >
         <span className={styles.dropdownSelectedValue}>{selectedOption?.label || label}</span>
+        <svg 
+          className={`${styles.dropdownChevron} ${isOpen ? styles.rotated : ''}`} 
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2.5" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
       </button>
 
 

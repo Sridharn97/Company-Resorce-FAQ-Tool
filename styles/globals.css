@@ -13,6 +13,7 @@
 
   /* Neutral Colors */
   --bg-main: #F8FAFC;
+  --bg-gradient-mid: #EEF2FF;
   /* Slate 50 */
   --bg-card: #FFFFFF;
   --text-primary: #0F172A;
@@ -44,6 +45,36 @@
   --radius-xl: 1rem;
 }
 
+[data-theme="dark"] {
+  /* Brand Colors - Dark Palette */
+  --primary: #6366F1; /* Indigo 500 */
+  --primary-hover: #4F46E5; /* Indigo 600 */
+  --primary-light: rgba(99, 102, 241, 0.15);
+  --secondary: #38BDF8; /* Sky 400 */
+
+  /* Neutral Colors */
+  --bg-main: #0B0F19; /* Dark Slate Blue */
+  --bg-gradient-mid: #070A13;
+  --bg-card: #111827; /* Dark Grey/Blue */
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #64748B;
+  --border: #1F2937;
+
+  /* Status Colors */
+  --success: #10B981;
+  --success-bg: rgba(16, 185, 129, 0.15);
+  --warning: #F59E0B;
+  --warning-bg: rgba(245, 158, 11, 0.15);
+  --error: #EF4444;
+  --error-bg: rgba(239, 68, 68, 0.15);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -56,12 +87,13 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 50%, #F8FAFC 100%);
+  background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-gradient-mid) 50%, var(--bg-main) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 h1,

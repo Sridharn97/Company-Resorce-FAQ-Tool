@@ -239,7 +239,14 @@ export default function AdminDashboard() {
             <div className={styles.insightsGrid}>
               <div className={styles.knowledgeGapsCard}>
                 <div className={styles.cardHeader}>
-                  <h4>🔥 High-Priority Gaps</h4>
+                  <h4>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: 'var(--error)', verticalAlign: 'middle' }}>
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    High-Priority Gaps
+                  </h4>
                   <p>Categories with high demand but few FAQs</p>
                 </div>
                 <div className={styles.gapsList}>
@@ -256,14 +263,26 @@ export default function AdminDashboard() {
                       </div>
                     ))
                   ) : (
-                    <div className={styles.emptyGaps}>✓ All categories are well-covered!</div>
+                    <div className={styles.emptyGaps}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      All categories are well-covered!
+                    </div>
                   )}
                 </div>
               </div>
 
               <div className={styles.categoryPerformanceCard}>
                 <div className={styles.cardHeader}>
-                  <h4>📊 Top Category Efficiency</h4>
+                  <h4>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: 'var(--primary)', verticalAlign: 'middle' }}>
+                      <line x1="18" y1="20" x2="18" y2="10"></line>
+                      <line x1="12" y1="20" x2="12" y2="4"></line>
+                      <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Top Category Efficiency
+                  </h4>
                   <p>Average views per FAQ</p>
                 </div>
                 <div className={styles.performanceList}>
@@ -301,8 +320,16 @@ export default function AdminDashboard() {
                         <h3>{faq.question}</h3>
                         <div className={styles.faqMeta}>
                           <span>{faq.category}</span>
-                          <span>{faq.views} views</span>
-                          <span>{faq.helpfulYes}👍 {faq.helpfulNo}👎</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--success)' }}><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                              {faq.helpfulYes}
+                            </span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--error)' }}><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm12-7h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                              {faq.helpfulNo}
+                            </span>
+                          </span>
                         </div>
                       </div>
                       <div className={styles.faqActions}>

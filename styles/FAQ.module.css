@@ -63,9 +63,17 @@
   background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
 }
 
-.faqContent h1 {
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.titleWrapper h1 {
   color: var(--text-primary);
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   font-size: 2.5rem;
   line-height: 1.2;
   font-weight: 700;
@@ -74,6 +82,35 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  flex-grow: 1;
+}
+
+.copyBtn {
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.copyBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+  transform: scale(1.05);
+}
+
+.copyBtnSuccess {
+  border-color: var(--success) !important;
+  color: var(--success) !important;
+  background: var(--success-bg) !important;
 }
 
 /* Meta Information */
@@ -341,5 +378,33 @@
 
   .feedback h3 {
     font-size: 1.125rem;
+  }
+}
+
+.titleActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .header,
+  .titleActions,
+  .feedback,
+  .timestamps {
+    display: none !important;
+  }
+  .faqContent {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .faqContent::before {
+    display: none !important;
   }
 }

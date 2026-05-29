@@ -141,8 +141,23 @@ export default function AskQuestion() {
         </form>
         
         <div className={styles.tipSection}>
-          <p>
-            💡 <strong>Tip:</strong> Be as specific as possible in your question to help us provide a better answer.
+          <p style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}>
+            <svg 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              style={{ color: 'var(--primary)', flexShrink: 0 }}
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <strong>Tip:</strong> Be as specific as possible in your question to help us provide a better answer.
           </p>
         </div>
       </div>
