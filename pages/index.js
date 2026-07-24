@@ -268,7 +268,7 @@ export default function Home() {
           <h1>Company Resource FAQ</h1>
           <nav className={styles.nav}>
             {(!user || user.role !== 'admin') && (
-              <Link href="/ask" className={styles.signupButton}>Ask a Question</Link>
+              <Link href="/ask" className={styles.secondaryButton}>Ask a Question</Link>
             )}
             <UserMenu user={user} onLogout={handleLogout} />
             
