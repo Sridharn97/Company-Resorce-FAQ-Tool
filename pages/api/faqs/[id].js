@@ -13,14 +13,27 @@ export default async function handler(req, res) {
         id,
         { $inc: { views: 1 } },
         { new: true }
-      ).populate('createdBy', 'email');
+      ).populate('createdBy', 'email')
+       .populate('comments.user', 'email name role');
 
       if (!faq) {
         return res.status(404).json({ error: 'FAQ not found' });
       }
 
-      res.status(200).json(faq);
+      // Fetch related FAQs based on category or tags
+      const relatedFaqs = await FAQ.find({
+        _id: { $ne: faq._id },
+        $or: [
+          { category: faq.category },
+          { tags: { $in: faq.tags && faq.tags.length > 0 ? faq.tags : ['__no_tags__'] } }
+        ]
+      })
+      .select('question category tags views helpfulYes helpfulNo')
+      .limit(3);
+
+      res.status(200).json({ faq, relatedFaqs });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: 'Failed to fetch FAQ' });
     }
   } else if (req.method === 'PUT') {

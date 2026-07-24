@@ -451,7 +451,9 @@
 }
 
 .faqCard {
-  background: white;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem 2rem;
@@ -461,13 +463,14 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  box-shadow: var(--shadow-sm);
 }
 
 .faqCard:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   border-color: var(--primary);
-  background: linear-gradient(135deg, white 0%, var(--bg-main) 100%);
+  background: var(--bg-card-solid);
 }
 
 .faqCard.expanded {
@@ -1097,10 +1100,12 @@
 
 .filterCard {
   background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-glass);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;

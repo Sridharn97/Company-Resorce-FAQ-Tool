@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function FAQCard({ faq, forceExpanded }) {
@@ -67,7 +68,11 @@ export default function FAQCard({ faq, forceExpanded }) {
     >
       <div className={styles.faqHeader}>
         <div className={styles.faqContentWrapper}>
-          <h3 className={styles.faqCardTitle}>{faq.question}</h3>
+          <h3 className={styles.faqCardTitle}>
+            <Link href={`/faq/${faq._id}`} onClick={(e) => e.stopPropagation()} style={{ color: 'inherit', textDecoration: 'none' }}>
+              {faq.question}
+            </Link>
+          </h3>
           <div className={styles.faqMeta}>
             <span className={styles.category}>{faq.category}</span>
             <span className={styles.readTime}>

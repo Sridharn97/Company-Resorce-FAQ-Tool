@@ -1,45 +1,40 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../../styles/FAQ.module.css';
+import FAQCard from '../../components/FAQCard';
 
-export default function FAQPage() {
-  const [faq, setFaq] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function FAQPage({ initialFaq, relatedFaqs }) {
+  const [faq, setFaq] = useState(initialFaq);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
-  const router = useRouter();
-  const { id } = router.query;
+  
+  // Comments and User state
+  const [user, setUser] = useState(null);
+  const [commentText, setCommentText] = useState('');
+  const [submittingComment, setSubmittingComment] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      fetchFaq();
-    }
-  }, [id]);
-
-  const fetchFaq = async () => {
-    try {
-      const res = await fetch(`/api/faqs/${id}`);
-      if (res.ok) {
-        const faqData = await res.json();
-        setFaq(faqData);
-      } else {
-        router.push('/');
+    const fetchUser = async () => {
+      try {
+        const res = await fetch('/api/auth/me');
+        if (res.ok) {
+          const userData = await res.json();
+          setUser(userData.user);
+        }
+      } catch (error) {
+        // Not logged in
       }
-    } catch (error) {
-      console.error('Failed to fetch FAQ:', error);
-      router.push('/');
-    }
-    setLoading(false);
-  };
+    };
+    fetchUser();
+  }, []);
 
   const handleFeedback = async (helpful) => {
     try {
       const res = await fetch('/api/faqs/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ faqId: id, helpful }),
+        body: JSON.stringify({ faqId: faq._id, helpful }),
       });
 
       if (res.ok) {
@@ -66,9 +61,34 @@ export default function FAQPage() {
     }
   };
 
-  if (loading) {
-    return <div className={styles.loading}>Loading FAQ...</div>;
-  }
+  const submitComment = async (e) => {
+    e.preventDefault();
+    if (!commentText.trim()) return;
+
+    setSubmittingComment(true);
+    try {
+      const res = await fetch(`/api/faqs/${faq._id}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: commentText }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setFaq(prev => ({
+          ...prev,
+          comments: [...(prev.comments || []), data.comment]
+        }));
+        setCommentText('');
+      } else {
+        alert('Failed to submit comment.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred.');
+    }
+    setSubmittingComment(false);
+  };
 
   if (!faq) {
     return <div className={styles.error}>FAQ not found</div>;
@@ -130,7 +150,7 @@ export default function FAQPage() {
             <div className={styles.faqMeta}>
               <span className={styles.category}>{faq.category}</span>
               <div className={styles.tags}>
-                {faq.tags.map(tag => (
+                {(faq.tags || []).map(tag => (
                   <span key={tag} className={styles.tag}>{tag}</span>
                 ))}
               </div>
@@ -171,7 +191,7 @@ export default function FAQPage() {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
                     </svg>
-                    Yes ({faq.helpfulYes})
+                    Yes ({faq.helpfulYes || 0})
                   </button>
                   <button 
                     onClick={() => handleFeedback(false)}
@@ -180,14 +200,103 @@ export default function FAQPage() {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm12-7h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path>
                     </svg>
-                    No ({faq.helpfulNo})
+                    No ({faq.helpfulNo || 0})
                   </button>
                 </div>
               )}
             </div>
+
+            {/* Comments Section */}
+            <div className={styles.commentsSection} style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
+              <h2>Comments & Clarifications</h2>
+              <p style={{ color: 'var(--text-light)', marginBottom: '1.5rem' }}>Ask for clarification or provide extra context.</p>
+
+              <div className={styles.commentsList}>
+                {(faq.comments || []).length === 0 ? (
+                  <p style={{ color: 'var(--text-light)', fontStyle: 'italic', marginBottom: '1.5rem' }}>No comments yet. Be the first!</p>
+                ) : (
+                  (faq.comments || []).map((comment, index) => (
+                    <div key={index} className={styles.commentItem} style={{ marginBottom: '1rem', padding: '1rem', backgroundColor: 'var(--bg-card)', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                      <div className={styles.commentHeader} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
+                        <span style={{ fontWeight: '600', color: 'var(--text)' }}>
+                          {comment.user?.name || comment.user?.email || 'Unknown User'}
+                          {comment.user?.role === 'admin' && (
+                            <span style={{ marginLeft: '8px', padding: '2px 6px', backgroundColor: 'var(--primary)', color: 'white', fontSize: '0.75rem', borderRadius: '4px' }}>Admin</span>
+                          )}
+                        </span>
+                        <span style={{ color: 'var(--text-light)' }}>{new Date(comment.createdAt).toLocaleDateString()}</span>
+                      </div>
+                      <p style={{ margin: 0, color: 'var(--text)' }}>{comment.text}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {user ? (
+                <form onSubmit={submitComment} style={{ marginTop: '1.5rem' }}>
+                  <textarea
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    placeholder="Write a comment..."
+                    style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', backgroundColor: 'var(--bg)', color: 'var(--text)', minHeight: '80px', marginBottom: '1rem', fontFamily: 'inherit' }}
+                    required
+                  ></textarea>
+                  <button 
+                    type="submit" 
+                    disabled={submittingComment}
+                    style={{ padding: '0.5rem 1rem', backgroundColor: 'var(--primary)', color: 'white', border: 'none', borderRadius: '6px', cursor: submittingComment ? 'not-allowed' : 'pointer', fontWeight: '500' }}
+                  >
+                    {submittingComment ? 'Posting...' : 'Post Comment'}
+                  </button>
+                </form>
+              ) : (
+                <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'var(--bg-card)', borderRadius: '8px', border: '1px solid var(--border)', textAlign: 'center' }}>
+                  <p style={{ margin: '0 0 1rem 0' }}>Please log in to post a comment.</p>
+                  <Link href="/login" style={{ display: 'inline-block', padding: '0.5rem 1rem', backgroundColor: 'var(--primary)', color: 'white', textDecoration: 'none', borderRadius: '6px', fontWeight: '500' }}>
+                    Log In
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Related FAQs Section */}
+            {relatedFaqs && relatedFaqs.length > 0 && (
+              <div className={styles.relatedSection} style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
+                <h2>Related FAQs</h2>
+                <div style={{ display: 'grid', gap: '1rem', marginTop: '1.5rem' }}>
+                  {relatedFaqs.map(rFaq => (
+                    <FAQCard key={rFaq._id} faq={rFaq} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </main>
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+
+  try {
+    const baseUrl = process.env.NEXTAUTH_URL || `http://${context.req.headers.host}`;
+    const res = await fetch(`${baseUrl}/api/faqs/${id}`);
+
+    if (!res.ok) {
+      return { notFound: true };
+    }
+
+    const data = await res.json();
+
+    return {
+      props: {
+        initialFaq: data.faq || data, // Handle both old and new API formats just in case
+        relatedFaqs: data.relatedFaqs || [],
+      },
+    };
+  } catch (error) {
+    return { notFound: true };
+  }
 }

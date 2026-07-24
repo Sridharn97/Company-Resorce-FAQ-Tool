@@ -1,30 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Brand Colors - Modern Professional Palette */
-  --primary: #4F46E5;
-  /* Indigo 600 */
-  --primary-hover: #4338CA;
-  /* Indigo 700 */
-  --primary-light: #E0E7FF;
-  /* Indigo 100 */
-  --secondary: #0EA5E9;
-  /* Sky 500 */
-
-  /* Neutral Colors */
-  --bg-main: #F8FAFC;
-  --bg-gradient-mid: #EEF2FF;
-  /* Slate 50 */
-  --bg-card: #FFFFFF;
-  --text-primary: #0F172A;
-  /* Slate 900 */
-  --text-secondary: #475569;
-  /* Slate 600 */
-  --text-muted: #94A3B8;
-  /* Slate 400 */
-  --border: #E2E8F0;
-  /* Slate 200 */
-
+  /* Brand Colors - Premium Violet/Indigo */
+  --primary: #7C3AED;      /* Violet 600 */
+  --primary-hover: #6D28D9; /* Violet 700 */
+  --primary-light: #EDE9FE; /* Violet 100 */
+  --secondary: #3B82F6;    /* Blue 500 */
+  
+  /* Neutral Colors - Sleek Grays */
+  --bg-main: #F4F4F5;      /* Zinc 100 */
+  --bg-gradient-mid: #FAFAFA;
+  --bg-card: rgba(255, 255, 255, 0.7); /* Glassmorphism base */
+  --bg-card-solid: #FFFFFF;
+  --text-primary: #18181B; /* Zinc 900 */
+  --text-secondary: #3F3F46; /* Zinc 700 */
+  --text-muted: #71717A;   /* Zinc 500 */
+  --border: rgba(228, 228, 231, 0.8); /* Zinc 200 transparent */
+  
   /* Status Colors */
   --success: #10B981;
   --success-bg: #D1FAE5;
@@ -33,46 +25,52 @@
   --error: #EF4444;
   --error-bg: #FEE2E2;
 
-  /* Shadows - Layered & smooth */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  /* Spacing System */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+
+  /* Container Alignment */
+  --max-width: 1280px;
+
+  /* Shadows - Premium Soft Shadows */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-lg: 0 12px 24px rgba(0,0,0,0.08);
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 
   /* Radii */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
 }
 
 [data-theme="dark"] {
-  /* Brand Colors - Dark Palette */
-  --primary: #6366F1; /* Indigo 500 */
-  --primary-hover: #4F46E5; /* Indigo 600 */
-  --primary-light: rgba(99, 102, 241, 0.15);
-  --secondary: #38BDF8; /* Sky 400 */
+  /* Brand Colors - Dark Premium */
+  --primary: #8B5CF6; /* Violet 500 */
+  --primary-hover: #A78BFA; /* Violet 400 */
+  --primary-light: rgba(139, 92, 246, 0.15);
+  --secondary: #60A5FA; /* Blue 400 */
 
-  /* Neutral Colors */
-  --bg-main: #0B0F19; /* Dark Slate Blue */
-  --bg-gradient-mid: #070A13;
-  --bg-card: #111827; /* Dark Grey/Blue */
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #64748B;
-  --border: #1F2937;
+  /* Neutral Colors - Deep Sleek Darks */
+  --bg-main: #09090B; /* Zinc 950 */
+  --bg-gradient-mid: #18181B; /* Zinc 900 */
+  --bg-card: rgba(39, 39, 42, 0.6); /* Glassmorphism base */
+  --bg-card-solid: #27272A; /* Zinc 800 */
+  --text-primary: #FAFAFA; /* Zinc 50 */
+  --text-secondary: #E4E4E7; /* Zinc 200 */
+  --text-muted: #A1A1AA; /* Zinc 400 */
+  --border: rgba(63, 63, 70, 0.5); /* Zinc 700 transparent */
 
-  /* Status Colors */
-  --success: #10B981;
-  --success-bg: rgba(16, 185, 129, 0.15);
-  --warning: #F59E0B;
-  --warning-bg: rgba(245, 158, 11, 0.15);
-  --error: #EF4444;
-  --error-bg: rgba(239, 68, 68, 0.15);
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  /* Shadows for Dark Mode */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 24px rgba(0,0,0,0.5);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -87,25 +85,21 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-gradient-mid) 50%, var(--bg-main) 100%);
+  background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-gradient-mid) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background 0.4s ease, color 0.4s ease;
+  min-height: 100vh;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 a {
@@ -115,68 +109,49 @@ a {
 
 button {
   font-family: 'Inter', sans-serif;
+  cursor: pointer;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg-main);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  border-radius: 10px;
+  background: var(--border);
+  border-radius: 8px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+  background: var(--primary);
 }
 
-/* Smooth Animations */
+/* Utility Classes for Glassmorphism */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-lg);
+}
+
+/* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-/* Selection */
 ::selection {
   background: var(--primary-light);
   color: var(--primary);
 }
-
 ::-moz-selection {
   background: var(--primary-light);
   color: var(--primary);

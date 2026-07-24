@@ -196,6 +196,9 @@ export default function AdminDashboard() {
             <Link href="/admin/user-questions" className={styles.createButton}>
               Review User Questions
             </Link>
+            <Link href="/admin/unhelpful-faqs" className={styles.createButton} style={{ backgroundColor: 'var(--error)' }}>
+              Review Unhelpful FAQs
+            </Link>
           </nav>
         </header>
 

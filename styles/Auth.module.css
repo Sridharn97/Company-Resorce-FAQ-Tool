@@ -10,9 +10,11 @@
 
 .form {
   background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 2.5rem;
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-glass);
   width: 100%;
   max-width: 440px;
   display: flex;

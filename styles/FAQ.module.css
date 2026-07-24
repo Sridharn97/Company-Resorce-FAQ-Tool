@@ -43,10 +43,12 @@
 }
 
 .faqContent {
-  background: white;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 3rem;
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-glass);
   margin-bottom: 2.5rem;
   border: 1px solid var(--border);
   position: relative;
