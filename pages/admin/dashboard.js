@@ -189,15 +189,33 @@ export default function AdminDashboard() {
         <header className={styles.header}>
           <h1>Admin Dashboard</h1>
           <nav className={styles.nav}>
-            <Link href="/">← Back to FAQs</Link>
-            <Link href="/admin/create-faq" className={styles.createButton}>
+            <Link href="/" className={styles.secondaryButton}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Back to FAQs
+            </Link>
+            <Link href="/admin/create-faq" className={styles.primaryButton}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
               Create New FAQ
             </Link>
-            <Link href="/admin/user-questions" className={styles.createButton}>
-              Review User Questions
+            <Link href="/admin/user-questions" className={styles.primaryButton}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              User Questions
             </Link>
-            <Link href="/admin/unhelpful-faqs" className={styles.createButton} style={{ backgroundColor: 'var(--error)' }}>
-              Review Unhelpful FAQs
+            <Link href="/admin/unhelpful-faqs" className={styles.primaryButton} style={{ background: 'var(--error)' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              Unhelpful FAQs
             </Link>
           </nav>
         </header>
@@ -205,24 +223,48 @@ export default function AdminDashboard() {
         <main className={styles.main}>
           <div className={styles.stats}>
             <div className={styles.statCard}>
+              <div className={styles.statIcon}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
               <div className={styles.statContent}>
                 <p className={styles.statLabel}>Total FAQs</p>
                 <h3 className={styles.statValue}>{analytics?.stats?.totalFaqs || 0}</h3>
               </div>
             </div>
             <div className={styles.statCard}>
+              <div className={styles.statIcon}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </div>
               <div className={styles.statContent}>
                 <p className={styles.statLabel}>Total Views</p>
                 <h3 className={styles.statValue}>{analytics?.stats?.totalViews || 0}</h3>
               </div>
             </div>
             <div className={styles.statCard}>
+              <div className={styles.statIcon}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
               <div className={styles.statContent}>
                 <p className={styles.statLabel}>Pending Questions</p>
                 <h3 className={styles.statValue}>{analytics?.stats?.pendingQuestions || 0}</h3>
               </div>
             </div>
             <div className={styles.statCard}>
+              <div className={styles.statIcon}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                </svg>
+              </div>
               <div className={styles.statContent}>
                 <p className={styles.statLabel}>Helpful Votes</p>
                 <h3 className={styles.statValue}>{analytics?.stats?.totalHelpful || 0}</h3>
